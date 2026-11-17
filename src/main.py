@@ -11,6 +11,7 @@ import sys
 from cargo_deps import direct_dependencies
 from config_loader import load_config
 from graph_bfs import bfs_iterative, load_test_repo
+from order_topo import load_order
 
 
 def parse_args(argv=None):
@@ -38,7 +39,7 @@ def print_params(params):
 
 
 def run_test_graph(params):
-    """Тестовый режим: граф из файла, обход в ширину (этап 3)."""
+    """Тестовый режим: граф из файла, обход в ширину (этапы 3-5)."""
     graph = load_test_repo(params["repo_url"])
     order, cycles = bfs_iterative(params["package_name"], graph.get)
     print("=== Порядок обхода ===")
@@ -48,6 +49,9 @@ def run_test_graph(params):
         print("=== Циклы ===")
         for found in cycles:
             print(" -> ".join(found))
+    print("=== Порядок загрузки ===")
+    for name in load_order(params["package_name"], graph.get):
+        print(name)
     return 0
 
 
