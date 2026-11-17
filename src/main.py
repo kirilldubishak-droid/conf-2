@@ -7,6 +7,7 @@
 import argparse
 import sys
 
+from cargo_deps import direct_dependencies
 from config_loader import load_config
 
 
@@ -46,6 +47,20 @@ def run(argv=None):
         print(f"[ERROR] {err}", file=sys.stderr)
         return 1
     print_params(params)
+    if not params["repo_url"].startswith("http"):
+        print("[ERROR] этап 2 работает только с URL", file=sys.stderr)
+        return 1
+    try:
+        deps = direct_dependencies(
+            params["package_name"], params["package_version"],
+            params["repo_url"],
+        )
+    except (OSError, ValueError, KeyError) as err:
+        print(f"[ERROR] {err}", file=sys.stderr)
+        return 1
+    print("=== Прямые зависимости ===")
+    for name in deps:
+        print(name)
     return 0
 
 

@@ -1,0 +1,1 @@
+{"dependencies": [{"crate_id": "DepA", "req": "^1.0", "kind": "normal", "optional": false}, {"crate_id": "DepB", "req": ">=2.0", "kind": "normal", "optional": false}, {"crate_id": "DevTool", "req": "^0.1", "kind": "dev", "optional": false}, {"crate_id": "OptFeat", "req": "^1.0", "kind": "normal", "optional": true}]}
