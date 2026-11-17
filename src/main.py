@@ -8,10 +8,13 @@ import argparse
 import os
 import sys
 
+from ascii_tree import render_tree
 from cargo_deps import direct_dependencies
 from config_loader import load_config
 from graph_bfs import bfs_iterative, load_test_repo
+from mermaid import describe
 from order_topo import load_order
+from pngimg import write_png
 
 
 def parse_args(argv=None):
@@ -52,6 +55,13 @@ def run_test_graph(params):
     print("=== Порядок загрузки ===")
     for name in load_order(params["package_name"], graph.get):
         print(name)
+    print("=== Mermaid ===")
+    print(describe(graph))
+    if params["ascii_tree"]:
+        print("=== ASCII-дерево ===")
+        print(render_tree(params["package_name"], graph.get))
+    write_png(graph, params["package_name"], params["graph_output"])
+    print("image: " + params["graph_output"])
     return 0
 
 
