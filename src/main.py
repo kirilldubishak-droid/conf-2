@@ -5,10 +5,12 @@
 """
 
 import argparse
+import os
 import sys
 
 from cargo_deps import direct_dependencies
 from config_loader import load_config
+from graph_bfs import bfs_iterative, load_test_repo
 
 
 def parse_args(argv=None):
@@ -35,6 +37,20 @@ def print_params(params):
     print("================================")
 
 
+def run_test_graph(params):
+    """Тестовый режим: граф из файла, обход в ширину (этап 3)."""
+    graph = load_test_repo(params["repo_url"])
+    order, cycles = bfs_iterative(params["package_name"], graph.get)
+    print("=== Порядок обхода ===")
+    for name in order:
+        print(name)
+    if cycles:
+        print("=== Циклы ===")
+        for found in cycles:
+            print(" -> ".join(found))
+    return 0
+
+
 def run(argv=None):
     """Точка входа приложения."""
     args = parse_args(argv)
@@ -47,6 +63,8 @@ def run(argv=None):
         print(f"[ERROR] {err}", file=sys.stderr)
         return 1
     print_params(params)
+    if params["test_repo_mode"] and os.path.isfile(params["repo_url"]):
+        return run_test_graph(params)
     if not params["repo_url"].startswith("http"):
         print("[ERROR] этап 2 работает только с URL", file=sys.stderr)
         return 1
