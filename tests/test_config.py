@@ -10,7 +10,7 @@ sys.path.insert(
     ),
 )
 
-from config_loader import load_config  # noqa: E402
+from config_loader import load_config              
 
 ROOT = os.path.join(
     os.path.dirname(__file__), "..", "configs"
