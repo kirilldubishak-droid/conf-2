@@ -3,7 +3,7 @@
 import configparser
 import os
 
-# обязательные ключи секции [app]
+                                 
 REQUIRED = (
     "package_name",
     "repo_url",

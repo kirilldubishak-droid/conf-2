@@ -3,14 +3,14 @@
 import os
 import sys
 
-sys.path.insert(  # noqa: E402
+sys.path.insert(              
     0,
     os.path.join(
         os.path.dirname(__file__), "..", "src"
     ),
 )
 
-from graph_bfs import (  # noqa: E402
+from graph_bfs import (              
     bfs_iterative,
     load_test_repo,
     trace_cycle,
