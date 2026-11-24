@@ -4,14 +4,14 @@ import json
 import os
 import sys
 
-sys.path.insert(  # noqa: E402
+sys.path.insert(              
     0,
     os.path.join(
         os.path.dirname(__file__), "..", "src"
     ),
 )
 
-from cargo_deps import (  # noqa: E402
+from cargo_deps import (              
     direct_dependencies,
     latest_version,
 )
