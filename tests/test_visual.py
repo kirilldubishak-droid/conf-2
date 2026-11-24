@@ -3,22 +3,25 @@
 import os
 import sys
 
-sys.path.insert(  # noqa: E402
+sys.path.insert(              
     0,
     os.path.join(
         os.path.dirname(__file__), "..", "src"
     ),
 )
 
-from graph_bfs import (  # noqa: E402
+from graph_bfs import (              
     load_test_repo,
 )
-from mermaid import (  # noqa: E402
+from mermaid import (              
     describe,
 )
-from pngimg import (  # noqa: E402
+from pngimg import (              
     write_png,
 )
+
+MIN_PNG_SIZE = 500
+
 
 ROOT = os.path.join(
     os.path.dirname(__file__), "testdata"
@@ -67,7 +70,7 @@ def test_size():
     try:
         graph = load_test_repo(data("chain.txt"))
         write_png(graph, "A", path)
-        assert os.path.getsize(path) > 500
+        assert os.path.getsize(path) > MIN_PNG_SIZE
     finally:
         if os.path.exists(path):
             os.remove(path)
